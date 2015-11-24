@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Web.Http;
 using Microsoft.WindowsAzure.Storage;
@@ -31,13 +32,27 @@ namespace WesternDevs.RockyDonut.Api.Controllers
             var message = new SlackMessage(channel_id, channel_name, user_id, user_name, text,
                 new DateTime(1970, 1, 1).AddSeconds(timestamp));
 
-            var storage = CloudStorageAccount.Parse(_configuration.AzureStorageConnectionString);
+            try
+            {
+                Trace.TraceInformation("Starting processing");
+                var storage = CloudStorageAccount.Parse(_configuration.AzureStorageConnectionString);
+                Trace.TraceInformation("StorageAccount.Parse complete");
 
-            var tableClient = storage.CreateCloudTableClient();
-            var table = tableClient.GetTableReference(_configuration.RawSlackMessageTableName);
-            table.CreateIfNotExists();
-            var insertOperation = TableOperation.Insert(message);
-            table.Execute(insertOperation);
+                var tableClient = storage.CreateCloudTableClient();
+                var table = tableClient.GetTableReference(_configuration.RawSlackMessageTableName);
+                table.CreateIfNotExists();
+                Trace.TraceInformation("Table CreateIfNotExists complete");
+                var insertOperation = TableOperation.Insert(message);
+                Trace.TraceInformation("Insert Operation created");
+                table.Execute(insertOperation);
+                Trace.TraceInformation("Insert Executed");
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.ToString());
+                throw;
+            }
+            
         }
     }
 }
