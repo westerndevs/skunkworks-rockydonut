@@ -12,6 +12,7 @@ namespace WesternDevs.RockyDonut.Api.Models
         public string Text { get; private set; }
         public DateTime MessageTimestamp { get; private set; }
         public Guid Id { get; private set; }
+        public double Sentiment { get; set; }
 
         public SlackMessage(string channelId, string channelName, string userId, string userName, string text, DateTime messageTimestamp)
         {
