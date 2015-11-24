@@ -10,7 +10,8 @@ namespace WesternDevs.RockyDonut.Api.Models
         public string UserId { get; private set; }
         public string UserName { get; private set; }
         public string Text { get; private set; }
-        public DateTime Timestamp { get; private set; }
+        public DateTime MessageTimestamp { get; private set; }
+        public Guid Id { get; private set; }
 
         public SlackMessage(string channelId, string channelName, string userId, string userName, string text, DateTime timestamp)
         {
@@ -19,7 +20,11 @@ namespace WesternDevs.RockyDonut.Api.Models
             UserId = userId;
             UserName = userName;
             Text = text;
-            Timestamp = timestamp;
+            MessageTimestamp = timestamp;
+            Id = Guid.NewGuid();
+            PartitionKey = channelId;
+            RowKey = Id.ToString();
         }
+        
     }
 }
