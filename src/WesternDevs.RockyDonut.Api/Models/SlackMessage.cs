@@ -13,14 +13,14 @@ namespace WesternDevs.RockyDonut.Api.Models
         public DateTime MessageTimestamp { get; private set; }
         public Guid Id { get; private set; }
 
-        public SlackMessage(string channelId, string channelName, string userId, string userName, string text, DateTime timestamp)
+        public SlackMessage(string channelId, string channelName, string userId, string userName, string text, DateTime messageTimestamp)
         {
             ChannelId = channelId;
             ChannelName = channelName;
             UserId = userId;
             UserName = userName;
             Text = text;
-            MessageTimestamp = timestamp;
+            MessageTimestamp = messageTimestamp;
             Id = Guid.NewGuid();
             PartitionKey = channelId;
             RowKey = Id.ToString();
