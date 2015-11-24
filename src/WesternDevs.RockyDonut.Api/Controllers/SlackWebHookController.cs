@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Web.Http;
+using System.Web.Mvc;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using WesternDevs.RockyDonut.Api.Infrastructure;
@@ -18,8 +19,13 @@ namespace WesternDevs.RockyDonut.Api.Controllers
             _configuration = configuration;
         }
 
+
+        public ActionResult Get()
+        {
+            return new JsonResult();
+        }
         // POST api/<controller>
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         public void Post([FromBody] string token, [FromBody] string team_id, [FromBody] string team_domain,
             [FromBody] string service_id, [FromBody] string channel_id,
