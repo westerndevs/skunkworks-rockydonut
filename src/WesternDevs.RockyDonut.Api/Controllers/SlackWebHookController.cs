@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Web.Http;
-using System.Web.Mvc;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using WesternDevs.RockyDonut.Api.Infrastructure;
@@ -18,47 +17,44 @@ namespace WesternDevs.RockyDonut.Api.Controllers
         {
             _configuration = configuration;
         }
-
-
-        public ActionResult Get()
-        {
-            return new JsonResult();
-        }
-        // POST api/<controller>
-        [System.Web.Http.HttpPost]
+        
+        [HttpPost]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
-        public void Post([FromBody] string token, [FromBody] string team_id, [FromBody] string team_domain,
-            [FromBody] string service_id, [FromBody] string channel_id,
-            [FromBody] string channel_name, [FromBody] double timestamp, [FromBody] string user_id,
-            [FromBody] string user_name, [FromBody] string text)
+        public void Post([FromBody] RawMessage rawMessage)
         {
-            //filter off messages from unknown sources based on token, team_domain, team_id, service_id
+            if (NotValidMessage(rawMessage)) return;
 
             //push to table storage
-            var message = new SlackMessage(channel_id, channel_name, user_id, user_name, text,
-                new DateTime(1970, 1, 1).AddSeconds(timestamp));
+            var message = new SlackMessage(rawMessage.channel_id, rawMessage.channel_name, rawMessage.user_id, rawMessage.user_name, rawMessage.text,
+                new DateTime(1970, 1, 1).AddSeconds(Convert.ToDouble(rawMessage.timestamp)));
 
             try
             {
-                Trace.TraceInformation("Starting processing");
                 var storage = CloudStorageAccount.Parse(_configuration.AzureStorageConnectionString);
-                Trace.TraceInformation("StorageAccount.Parse complete");
-
                 var tableClient = storage.CreateCloudTableClient();
                 var table = tableClient.GetTableReference(_configuration.RawSlackMessageTableName);
                 table.CreateIfNotExists();
-                Trace.TraceInformation("Table CreateIfNotExists complete");
                 var insertOperation = TableOperation.Insert(message);
-                Trace.TraceInformation("Insert Operation created");
                 table.Execute(insertOperation);
-                Trace.TraceInformation("Insert Executed");
             }
             catch (Exception ex)
             {
                 Trace.TraceError(ex.ToString());
                 throw;
             }
-            
+        }
+
+        private bool NotValidMessage(RawMessage rawMessage)
+        {
+            if (string.Compare(_configuration.SlackWebhookToken, rawMessage.token, StringComparison.CurrentCultureIgnoreCase) != 0) return false;
+
+            if (string.Compare(_configuration.SlackTeamDomain, rawMessage.team_domain, StringComparison.CurrentCultureIgnoreCase) != 0) return false;
+
+            if (string.Compare(_configuration.SlackTeamId, rawMessage.team_id, StringComparison.CurrentCultureIgnoreCase) != 0) return false;
+
+            if (string.Compare(_configuration.SlackServiceId, rawMessage.service_id, StringComparison.CurrentCultureIgnoreCase) != 0) return false;
+
+            return true;
         }
     }
 }

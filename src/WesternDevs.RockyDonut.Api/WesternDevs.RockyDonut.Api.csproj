@@ -183,6 +183,7 @@
     </Compile>
     <Compile Include="Infrastructure\Configuration.cs" />
     <Compile Include="Infrastructure\IConfiguration.cs" />
+    <Compile Include="Models\RawMessage.cs" />
     <Compile Include="Models\SlackMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
