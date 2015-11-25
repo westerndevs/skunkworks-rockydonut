@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Web.Http;
+using System.Web.Mvc;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using WesternDevs.RockyDonut.Api.Infrastructure;
@@ -17,8 +18,33 @@ namespace WesternDevs.RockyDonut.Api.Controllers
         {
             _configuration = configuration;
         }
-        
-        [HttpPost]
+
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult Get(string id, string partition)
+        {
+            var storageAccount = CloudStorageAccount.Parse(_configuration.AzureStorageConnectionString);
+
+            // Create the table client.
+            var tableClient = storageAccount.CreateCloudTableClient();
+
+            // Create the CloudTable object that represents the "people" table.
+            var table = tableClient.GetTableReference(_configuration.RawSlackMessageTableName);
+
+            // Create a retrieve operation that takes a customer entity.
+            var retrieveOperation = TableOperation.Retrieve<SlackMessage>(partition, id);
+
+            // Execute the retrieve operation.
+            var retrievedResult = table.Execute(retrieveOperation);
+
+            if (retrievedResult != null)
+            {
+                var message = (SlackMessage) retrievedResult.Result;
+                return Ok(message);
+            }
+            return NotFound();
+        }
+
+        [System.Web.Http.HttpPost]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         public void Post([FromBody] RawMessage rawMessage)
         {
