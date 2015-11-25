@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Mvc;
 using Microsoft.WindowsAzure.Storage;
@@ -72,8 +73,8 @@ namespace WesternDevs.RockyDonut.Api.Controllers
 
         private bool NotValidMessage(RawMessage rawMessage)
         {
-            if (string.Compare(_configuration.SlackWebhookToken, rawMessage.token, StringComparison.CurrentCultureIgnoreCase) != 0) return true;
-
+            if (!_configuration.SlackWebhookToken.Contains(rawMessage.token)) return true;
+            
             if (string.Compare(_configuration.SlackTeamDomain, rawMessage.team_domain, StringComparison.CurrentCultureIgnoreCase) != 0) return true;
 
             if (string.Compare(_configuration.SlackTeamId, rawMessage.team_id, StringComparison.CurrentCultureIgnoreCase) != 0) return true;
