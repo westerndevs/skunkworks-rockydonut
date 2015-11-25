@@ -5,14 +5,14 @@ namespace WesternDevs.RockyDonut.Api.Models
 {
     public class SlackMessage : TableEntity
     {
-        public string ChannelId { get; private set; }
-        public string ChannelName { get; private set; }
-        public string UserId { get; private set; }
-        public string UserName { get; private set; }
-        public string Text { get; private set; }
-        public DateTime MessageTimestamp { get; private set; }
-        public Guid Id { get; private set; }
-
+        public string ChannelId { get; set; }
+        public string ChannelName { get; set; }
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+        public string Text { get; set; }
+        public DateTime MessageTimestamp { get; set; }
+        public Guid Id { get; set; }
+        public SlackMessage() {}
         public SlackMessage(string channelId, string channelName, string userId, string userName, string text, DateTime messageTimestamp)
         {
             ChannelId = channelId;
