@@ -7,6 +7,6 @@
         string[] SlackWebhookToken { get;}
         string SlackTeamDomain { get; }
         string SlackTeamId { get; }
-        string SlackServiceId { get; }
+        string[] SlackServiceId { get; }
     }
 }
