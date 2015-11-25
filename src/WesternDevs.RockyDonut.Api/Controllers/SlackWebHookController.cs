@@ -79,7 +79,7 @@ namespace WesternDevs.RockyDonut.Api.Controllers
 
             if (string.Compare(_configuration.SlackTeamId, rawMessage.team_id, StringComparison.CurrentCultureIgnoreCase) != 0) return true;
 
-            if (string.Compare(_configuration.SlackServiceId, rawMessage.service_id, StringComparison.CurrentCultureIgnoreCase) != 0) return true;
+            if (!_configuration.SlackServiceId.Contains(rawMessage.service_id)) return true;
 
             return false;
         }

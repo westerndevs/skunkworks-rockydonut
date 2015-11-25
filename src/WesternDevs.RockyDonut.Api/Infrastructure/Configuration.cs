@@ -10,6 +10,6 @@ namespace WesternDevs.RockyDonut.Api.Infrastructure
         public string[] SlackWebhookToken => ConfigurationManager.AppSettings["SlackWebhookToken"].Split(',');
         public string SlackTeamDomain => ConfigurationManager.AppSettings["SlackTeamDomain"];
         public string SlackTeamId => ConfigurationManager.AppSettings["SlackTeamId"];
-        public string SlackServiceId => ConfigurationManager.AppSettings["SlackServiceId"];
+        public string[] SlackServiceId => ConfigurationManager.AppSettings["SlackServiceId"].Split(',');
     }
 }
