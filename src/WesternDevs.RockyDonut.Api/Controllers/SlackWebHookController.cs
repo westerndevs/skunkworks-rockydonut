@@ -46,15 +46,15 @@ namespace WesternDevs.RockyDonut.Api.Controllers
 
         private bool NotValidMessage(RawMessage rawMessage)
         {
-            if (string.Compare(_configuration.SlackWebhookToken, rawMessage.token, StringComparison.CurrentCultureIgnoreCase) != 0) return false;
+            if (string.Compare(_configuration.SlackWebhookToken, rawMessage.token, StringComparison.CurrentCultureIgnoreCase) != 0) return true;
 
-            if (string.Compare(_configuration.SlackTeamDomain, rawMessage.team_domain, StringComparison.CurrentCultureIgnoreCase) != 0) return false;
+            if (string.Compare(_configuration.SlackTeamDomain, rawMessage.team_domain, StringComparison.CurrentCultureIgnoreCase) != 0) return true;
 
-            if (string.Compare(_configuration.SlackTeamId, rawMessage.team_id, StringComparison.CurrentCultureIgnoreCase) != 0) return false;
+            if (string.Compare(_configuration.SlackTeamId, rawMessage.team_id, StringComparison.CurrentCultureIgnoreCase) != 0) return true;
 
-            if (string.Compare(_configuration.SlackServiceId, rawMessage.service_id, StringComparison.CurrentCultureIgnoreCase) != 0) return false;
+            if (string.Compare(_configuration.SlackServiceId, rawMessage.service_id, StringComparison.CurrentCultureIgnoreCase) != 0) return true;
 
-            return true;
+            return false;
         }
     }
 }
