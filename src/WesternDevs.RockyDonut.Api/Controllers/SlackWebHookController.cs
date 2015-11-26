@@ -6,17 +6,21 @@ using System.Web.Http;
 using System.Web.Mvc;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
+using NServiceBus;
 using WesternDevs.RockyDonut.Api.Infrastructure;
 using WesternDevs.RockyDonut.Api.Models;
+using WesternDevs.RockyDonut.Contracts;
 
 namespace WesternDevs.RockyDonut.Api.Controllers
 {
     public class SlackWebHookController : ApiController
     {
         private readonly IConfiguration _configuration;
+        private readonly IBus _bus;
 
-        public SlackWebHookController(IConfiguration configuration)
+        public SlackWebHookController(IConfiguration configuration, IBus bus)
         {
+            _bus = bus;
             _configuration = configuration;
         }
 
@@ -24,7 +28,7 @@ namespace WesternDevs.RockyDonut.Api.Controllers
         public IHttpActionResult Get(string id, string partition)
         {
             var storageAccount = CloudStorageAccount.Parse(_configuration.AzureStorageConnectionString);
-
+            
             // Create the table client.
             var tableClient = storageAccount.CreateCloudTableClient();
 
