@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WesternDevs.RockyDonut.Api", "WesternDevs.RockyDonut.Api\WesternDevs.RockyDonut.Api.csproj", "{40D3A54E-796E-4CE2-9590-57C1F3846074}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WesternDevs.RockyDonut.Contracts", "WesternDevs.RockyDonut.Contracts\WesternDevs.RockyDonut.Contracts.csproj", "{4824EDC4-A17F-4A08-BA98-ED6D8A888DD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{40D3A54E-796E-4CE2-9590-57C1F3846074}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40D3A54E-796E-4CE2-9590-57C1F3846074}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40D3A54E-796E-4CE2-9590-57C1F3846074}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4824EDC4-A17F-4A08-BA98-ED6D8A888DD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4824EDC4-A17F-4A08-BA98-ED6D8A888DD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4824EDC4-A17F-4A08-BA98-ED6D8A888DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4824EDC4-A17F-4A08-BA98-ED6D8A888DD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
