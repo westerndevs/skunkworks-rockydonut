@@ -5,7 +5,7 @@ namespace WesternDevs.RockyDonut.Api.Infrastructure
 {
     public class Configuration:IConfiguration
     {
-        public string RawSlackMessageTableName => "rawSlackMessage";
+        public string RawSlackMessageTableName => ConfigurationManager.AppSettings["rawMessageTableName"];
         public string AzureStorageConnectionString => ConfigurationManager.AppSettings["AzureStorageConnectionString"];
         public string[] SlackWebhookToken => ConfigurationManager.AppSettings["SlackWebhookToken"].Split(',');
         public string SlackTeamDomain => ConfigurationManager.AppSettings["SlackTeamDomain"];
